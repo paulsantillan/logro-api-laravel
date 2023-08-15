@@ -19,7 +19,7 @@ class CandidatoController extends Controller
     );
     public function index()
     {
-        $candidatos=Candidato::with('Lista','TipoCandidato')->get();
+        $candidatos=Candidato::with('Lista','TipoCandidato')->where('estado','=',1)->get();
         return response()->json([
             "candidatos"=>$candidatos
         ],200);
@@ -30,7 +30,7 @@ class CandidatoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -61,8 +61,15 @@ class CandidatoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+
+        $candidato=Candidato::find($id);
+        $candidato->update([
+            "estado"=>0
+        ]);
+        return response()->json([
+            "message"=>"candidato eliminado"
+        ],200);
     }
 }
