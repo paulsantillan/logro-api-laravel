@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LIsta;
 use Illuminate\Http\Request;
 
 class ListaController extends Controller
@@ -11,7 +12,12 @@ class ListaController extends Controller
      */
     public function index()
     {
-        //
+        $listas = Lista::with(['Candidato' => function ($query) {
+            $query->withSum('Votos', 'votos');
+        }])->get();
+       return response()->json([
+            "resultado"=>$listas
+       ]);
     }
 
     /**

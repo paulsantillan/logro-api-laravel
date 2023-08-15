@@ -52,7 +52,7 @@ class CandidatoController extends Controller
             return response()->json(["messages" => $messages], 500);
         }
         $candidato=Candidato::find($id);
-        $candidato->update([$request->all]);
+        $candidato->update($request->all());
         return response()->json([
             "message"=>"candidato actualizado"
         ],200);
